@@ -136,24 +136,13 @@ button {
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
   flex-shrink: 0;
 }
 
-.logo-icon {
-  font-size: 2rem;
-  line-height: 1;
-}
-
-.logo-text {
-  font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--purple);
-}
-
-.logo-accent {
-  color: var(--pink);
+.logo-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Nav */
@@ -479,12 +468,8 @@ button {
     --header-height: 60px;
   }
 
-  .logo-text {
-    font-size: 1.3rem;
-  }
-
-  .logo-icon {
-    font-size: 1.6rem;
+  .logo-img {
+    height: 48px;
   }
 
   .phone-link {
