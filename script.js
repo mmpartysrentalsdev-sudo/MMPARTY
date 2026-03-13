@@ -147,4 +147,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
+  /* ============================================
+     PHASE 2: Welcome, Order Date, Categories
+     ============================================ */
+
+  /* ---------- Read More toggle ---------- */
+  const readMoreBtn = document.getElementById('readMoreBtn');
+  const welcomeExtra = document.getElementById('welcomeExtra');
+
+  if (readMoreBtn && welcomeExtra) {
+    readMoreBtn.addEventListener('click', () => {
+      const expanded = welcomeExtra.classList.toggle('expanded');
+      readMoreBtn.textContent = expanded ? 'Read Less' : 'Read More';
+    });
+  }
+
+  /* ---------- Order By Date ---------- */
+  const checkDateBtn = document.getElementById('checkDateBtn');
+  const eventDateInput = document.getElementById('eventDate');
+
+  if (checkDateBtn && eventDateInput) {
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    eventDateInput.setAttribute('min', today);
+
+    checkDateBtn.addEventListener('click', () => {
+      const selectedDate = eventDateInput.value;
+      if (!selectedDate) {
+        alert('Please select an event date first!');
+        return;
+      }
+      const dateObj = new Date(selectedDate + 'T00:00:00');
+      const formatted = dateObj.toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+      alert(`Great choice! Checking availability for ${formatted}.\n\nCall us at (714) 555-1234 to confirm your booking!`);
+    });
+  }
+
+  /* ---------- Category card hover sound (subtle) ---------- */
+  document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-6px)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
 });

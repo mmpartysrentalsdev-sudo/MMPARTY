@@ -420,6 +420,186 @@ button {
 }
 
 /* ============================================
+   PHASE 2: Welcome, Order Date, Categories
+   ============================================ */
+
+/* ---------- Shared Section Styles ---------- */
+.section {
+  padding: 60px 0;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+
+/* ---------- Welcome ---------- */
+.welcome {
+  background: var(--white);
+  text-align: center;
+}
+
+.welcome-text {
+  max-width: 800px;
+  margin: 0 auto 16px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+.welcome-extra {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.welcome-extra.expanded {
+  max-height: 300px;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--purple);
+  border: 2px solid var(--purple);
+  margin-top: 8px;
+}
+
+.btn-outline:hover {
+  background: var(--purple);
+  color: var(--white);
+}
+
+/* ---------- Order By Date ---------- */
+.order-date {
+  padding: 40px 0;
+}
+
+.order-date-box {
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+  color: var(--white);
+  box-shadow: 0 8px 30px rgba(132, 94, 194, 0.25);
+}
+
+.order-date-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.order-date-box h3 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.order-date-box p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 24px;
+}
+
+.date-form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.date-input {
+  padding: 14px 20px;
+  border-radius: 50px;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  min-width: 220px;
+  outline: none;
+}
+
+.date-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.btn-primary {
+  background: var(--sunny);
+  color: var(--dark);
+  box-shadow: 0 4px 15px rgba(255, 217, 61, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 217, 61, 0.5);
+}
+
+/* ---------- Categories ---------- */
+.categories {
+  background: var(--light-gray);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.category-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  display: block;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.category-img {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-emoji {
+  font-size: 4rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.category-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-top: 16px;
+  padding: 0 12px;
+}
+
+.category-card p {
+  font-size: 0.95rem;
+  color: var(--gray);
+  padding: 4px 12px 20px;
+}
+
+.category-card p strong {
+  color: var(--purple);
+  font-size: 1.05rem;
+}
+
+/* ============================================
    RESPONSIVE - Tablet
    ============================================ */
 @media (max-width: 960px) {
@@ -457,6 +637,11 @@ button {
 
   .phone-link span:not(.phone-icon) {
     /* Hide phone text on smaller tablets if needed */
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 
@@ -519,5 +704,43 @@ button {
   .hero-slide::after {
     width: 150px;
     height: 150px;
+  }
+
+  .section {
+    padding: 40px 0;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .welcome-text {
+    font-size: 1rem;
+  }
+
+  .order-date-box {
+    padding: 32px 20px;
+  }
+
+  .order-date-box h3 {
+    font-size: 1.5rem;
+  }
+
+  .date-input {
+    min-width: 180px;
+    width: 100%;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .category-img {
+    height: 120px;
+  }
+
+  .category-emoji {
+    font-size: 3rem;
   }
 }
