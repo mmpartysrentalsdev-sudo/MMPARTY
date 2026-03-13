@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MM Party Rentals - Fun For Every Occasion!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">&#127880;</span>
+        <span class="logo-text">MM Party<span class="logo-accent">Rentals</span></span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#rentals" class="nav-link">All Rentals</a>
+        <a href="#gallery" class="nav-link">Photo Gallery</a>
+        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="#service-area" class="nav-link">Service Area</a>
+        <a href="#faq" class="nav-link">FAQs</a>
+        <a href="#contact" class="nav-link">Contact Us</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:+17145551234" class="phone-link">
+          <span class="phone-icon">&#128222;</span>
+          (714) 555-1234
+        </a>
+        <div class="cart-btn" id="cartBtn">
+          <span class="cart-icon">&#128722;</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO BANNER CAROUSEL ========== -->
+  <section class="hero" id="home">
+    <div class="hero-carousel" id="heroCarousel">
+      <div class="hero-slide active" data-bg="1">
+        <div class="hero-content">
+          <h1>Make Your Party Unforgettable!</h1>
+          <p>Bounce houses, water slides, and more for every celebration</p>
+          <a href="#rentals" class="btn btn-hero">Browse Rentals</a>
+        </div>
+      </div>
+      <div class="hero-slide" data-bg="2">
+        <div class="hero-content">
+          <h1>Summer Splash Specials!</h1>
+          <p>Cool off with our amazing water slide collection</p>
+          <a href="#rentals" class="btn btn-hero">Shop Water Slides</a>
+        </div>
+      </div>
+      <div class="hero-slide" data-bg="3">
+        <div class="hero-content">
+          <h1>Combo Deals Available!</h1>
+          <p>Bundle bounce houses + tables &amp; chairs and save big</p>
+          <a href="#rentals" class="btn btn-hero">See Combos</a>
+        </div>
+      </div>
+    </div>
+    <button class="hero-arrow hero-prev" id="heroPrev" aria-label="Previous slide">&#10094;</button>
+    <button class="hero-arrow hero-next" id="heroNext" aria-label="Next slide">&#10095;</button>
+    <div class="hero-dots" id="heroDots"></div>
+  </section>
+
+  <!-- Phases 2-5 content will go here -->
+
+  <script src="script.js"></script>
+</body>
+</html>
