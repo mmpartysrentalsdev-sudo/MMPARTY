@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const formatted = dateObj.toLocaleDateString('en-US', {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
       });
-      alert(`Great choice! Checking availability for ${formatted}.\n\nCall us at (714) 555-1234 to confirm your booking!`);
+      alert(`Great choice! Checking availability for ${formatted}.\n\nCall us at (714) 860-2510 to confirm your booking!`);
     });
   }
 
@@ -679,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="form-success-icon">&#127881;</span>
           <h3>Message Sent!</h3>
           <p>Thanks ${name}! We'll get back to you within 24 hours.</p>
-          <p style="margin-top:12px;">Or call us now at <a href="tel:+17145551234" style="color:var(--purple); font-weight:700;">(714) 555-1234</a></p>
+          <p style="margin-top:12px;">Or call us now at <a href="tel:+17145551234" style="color:var(--purple); font-weight:700;">(714) 860-2510</a></p>
         </div>
       `;
     });
