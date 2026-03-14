@@ -221,17 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadProducts() {
     try {
-      const query = `*[_type == "product"]{
-        _id,
-        name,
-        "slug": slug.current,
-        category,
-        price,
-        "imageRef": image.asset._ref,
-        description,
-        featured,
-        dimensions
-      }`;
+      const query = `*[_type == "product"]{ _id, name, "slug": slug.current, category, price, "imageRef": image.asset._ref, description, featured, dimensions }`;
 
       allProducts = await sanityFetch(query);
       productsLoading.style.display = 'none';
@@ -379,13 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadGallery() {
     try {
-      const query = `*[_type == "galleryImage"] | order(order asc) {
-        _id,
-        title,
-        "imageRef": image.asset._ref,
-        category,
-        order
-      }`;
+      const query = `*[_type == "galleryImage"] | order(order asc) { _id, title, "imageRef": image.asset._ref, category, order }`;
 
       allGalleryImages = await sanityFetch(query);
       filteredGalleryImages = [...allGalleryImages];
