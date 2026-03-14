@@ -478,8 +478,249 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  /* ---------- Initialize Phase 3 ---------- */
+  /* ============================================
+     PHASE 4: Reviews, Service Area, FAQ
+     ============================================ */
+
+  /* ---------- Reviews Carousel ---------- */
+  const reviewsTrack = document.getElementById('reviewsTrack');
+  const reviewsLoading = document.getElementById('reviewsLoading');
+  const reviewsPrev = document.getElementById('reviewsPrev');
+  const reviewsNext = document.getElementById('reviewsNext');
+  const reviewsDotsContainer = document.getElementById('reviewsDots');
+  let reviewsPage = 0;
+  let reviewsPerPage = 3;
+  let totalReviewPages = 0;
+
+  function getReviewsPerPage() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 960) return 2;
+    return 3;
+  }
+
+  async function loadReviews() {
+    try {
+      const query = `*[_type == "review"] | order(featured desc, date desc) { _id, customerName, rating, text, eventType, date, featured }`;
+      const reviews = await sanityFetch(query);
+      reviewsLoading.style.display = 'none';
+
+      if (reviews.length === 0) {
+        reviewsTrack.innerHTML = '<p style="text-align:center; width:100%; color:var(--gray); padding:40px;">No reviews yet.</p>';
+        return;
+      }
+
+      reviews.forEach(review => {
+        const stars = '\u2605'.repeat(review.rating) + '\u2606'.repeat(5 - review.rating);
+        const initials = review.customerName.split(' ').map(n => n[0]).join('').toUpperCase();
+        const card = document.createElement('div');
+        card.className = 'review-card';
+        card.innerHTML = `
+          <div class="review-stars">${stars}</div>
+          <p class="review-text">${review.text}</p>
+          <div class="review-author">
+            <div class="review-avatar">${initials}</div>
+            <div class="review-author-info">
+              <h4>${review.customerName}</h4>
+              <p>${review.eventType || ''}</p>
+            </div>
+          </div>
+        `;
+        reviewsTrack.appendChild(card);
+      });
+
+      reviewsPerPage = getReviewsPerPage();
+      totalReviewPages = Math.ceil(reviews.length / reviewsPerPage);
+      buildReviewDots();
+      updateReviewsCarousel();
+    } catch (err) {
+      console.error('Failed to load reviews:', err);
+      reviewsLoading.innerHTML = '<p style="color: var(--coral);">Unable to load reviews.</p>';
+    }
+  }
+
+  function buildReviewDots() {
+    reviewsDotsContainer.innerHTML = '';
+    for (let i = 0; i < totalReviewPages; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'reviews-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => {
+        reviewsPage = i;
+        updateReviewsCarousel();
+      });
+      reviewsDotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateReviewsCarousel() {
+    const cards = reviewsTrack.querySelectorAll('.review-card');
+    if (cards.length === 0) return;
+    const cardWidth = cards[0].offsetWidth + 24; // gap
+    reviewsTrack.style.transform = `translateX(-${reviewsPage * reviewsPerPage * cardWidth}px)`;
+
+    const dots = reviewsDotsContainer.querySelectorAll('.reviews-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === reviewsPage));
+  }
+
+  reviewsPrev.addEventListener('click', () => {
+    reviewsPage = (reviewsPage - 1 + totalReviewPages) % totalReviewPages;
+    updateReviewsCarousel();
+  });
+
+  reviewsNext.addEventListener('click', () => {
+    reviewsPage = (reviewsPage + 1) % totalReviewPages;
+    updateReviewsCarousel();
+  });
+
+  window.addEventListener('resize', () => {
+    const newPerPage = getReviewsPerPage();
+    if (newPerPage !== reviewsPerPage) {
+      reviewsPerPage = newPerPage;
+      totalReviewPages = Math.max(1, Math.ceil(reviewsTrack.querySelectorAll('.review-card').length / reviewsPerPage));
+      reviewsPage = Math.min(reviewsPage, totalReviewPages - 1);
+      buildReviewDots();
+      updateReviewsCarousel();
+    }
+  });
+
+  /* ---------- Service Area ---------- */
+  const serviceAreaCities = document.getElementById('serviceAreaCities');
+  const citiesLoading = document.getElementById('citiesLoading');
+
+  async function loadServiceAreas() {
+    try {
+      const query = `*[_type == "serviceArea"] | order(order asc) { _id, city, state }`;
+      const areas = await sanityFetch(query);
+      citiesLoading.style.display = 'none';
+
+      if (areas.length === 0) {
+        serviceAreaCities.innerHTML = '<p style="color:var(--gray); padding:20px;">Service areas coming soon.</p>';
+        return;
+      }
+
+      areas.forEach(area => {
+        const tag = document.createElement('div');
+        tag.className = 'city-tag';
+        tag.textContent = `${area.city}, ${area.state || 'CA'}`;
+        serviceAreaCities.appendChild(tag);
+      });
+    } catch (err) {
+      console.error('Failed to load service areas:', err);
+      citiesLoading.innerHTML = '<p style="color: var(--coral);">Unable to load service areas.</p>';
+    }
+  }
+
+  /* ---------- FAQ Accordion ---------- */
+  const faqList = document.getElementById('faqList');
+  const faqLoading = document.getElementById('faqLoading');
+
+  async function loadFAQs() {
+    try {
+      const query = `*[_type == "faq"] | order(order asc) { _id, question, answer }`;
+      const faqs = await sanityFetch(query);
+      faqLoading.style.display = 'none';
+
+      if (faqs.length === 0) {
+        faqList.innerHTML = '<p style="text-align:center; color:var(--gray); padding:40px;">FAQs coming soon.</p>';
+        return;
+      }
+
+      faqs.forEach(faq => {
+        const item = document.createElement('div');
+        item.className = 'faq-item';
+        item.innerHTML = `
+          <button class="faq-question">
+            <span>${faq.question}</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">${faq.answer}</div>
+          </div>
+        `;
+        item.querySelector('.faq-question').addEventListener('click', () => {
+          const wasOpen = item.classList.contains('open');
+          // Close all others
+          faqList.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+          if (!wasOpen) item.classList.add('open');
+        });
+        faqList.appendChild(item);
+      });
+    } catch (err) {
+      console.error('Failed to load FAQs:', err);
+      faqLoading.innerHTML = '<p style="color: var(--coral);">Unable to load FAQs.</p>';
+    }
+  }
+
+  /* ============================================
+     PHASE 5: Contact Form, Footer, Polish
+     ============================================ */
+
+  /* ---------- Contact Form ---------- */
+  const contactForm = document.getElementById('contactForm');
+  const contactDate = document.getElementById('contactDate');
+
+  if (contactDate) {
+    const today = new Date().toISOString().split('T')[0];
+    contactDate.setAttribute('min', today);
+  }
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const phone = document.getElementById('contactPhone').value;
+      const date = document.getElementById('contactDate').value;
+      const message = document.getElementById('contactMessage').value;
+
+      // Show success message
+      contactForm.innerHTML = `
+        <div class="form-success">
+          <span class="form-success-icon">&#127881;</span>
+          <h3>Message Sent!</h3>
+          <p>Thanks ${name}! We'll get back to you within 24 hours.</p>
+          <p style="margin-top:12px;">Or call us now at <a href="tel:+17145551234" style="color:var(--purple); font-weight:700;">(714) 555-1234</a></p>
+        </div>
+      `;
+    });
+  }
+
+  /* ---------- Back to Top Button ---------- */
+  const backToTop = document.getElementById('backToTop');
+
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 500);
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /* ---------- Scroll Animations ---------- */
+  function initScrollAnimations() {
+    const elements = document.querySelectorAll('.section-title, .section-subtitle, .category-card, .contact-info-card, .map-placeholder');
+    elements.forEach(el => el.classList.add('animate-on-scroll'));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+  }
+
+  initScrollAnimations();
+
+  /* ---------- Initialize Phases 3-5 ---------- */
   loadProducts();
   loadGallery();
+  loadReviews();
+  loadServiceAreas();
+  loadFAQs();
 
 });
