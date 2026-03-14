@@ -162,8 +162,96 @@
     </div>
   </section>
 
-  <!-- Phases 3-5 content will go here -->
+  <!-- ========== ALL RENTALS (Products Grid) ========== -->
+  <section class="rentals section" id="rentals">
+    <div class="container">
+      <h2 class="section-title">All Rentals</h2>
+      <p class="section-subtitle">Browse our full collection of party rental equipment</p>
 
+      <!-- Filter & Search Bar -->
+      <div class="rentals-toolbar">
+        <div class="filter-group">
+          <select class="filter-select" id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="bounce-houses">Bounce Houses</option>
+            <option value="water-slides">Water Slides</option>
+            <option value="combo-units">Combo Units</option>
+            <option value="interactive-games">Interactive Games</option>
+            <option value="tables-chairs">Tables & Chairs</option>
+            <option value="concessions">Concessions</option>
+          </select>
+          <select class="filter-select" id="sortFilter">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-az">Name: A - Z</option>
+          </select>
+        </div>
+        <div class="search-box">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" class="search-input" id="productSearch" placeholder="Search rentals...">
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="productGrid">
+        <!-- Products loaded dynamically from Sanity -->
+        <div class="loading-spinner" id="productsLoading">
+          <div class="spinner"></div>
+          <p>Loading rentals...</p>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div class="no-results" id="noResults" style="display: none;">
+        <span class="no-results-icon">&#128533;</span>
+        <h3>No rentals found</h3>
+        <p>Try adjusting your filters or search terms</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PHOTO GALLERY ========== -->
+  <section class="gallery section" id="gallery">
+    <div class="container">
+      <h2 class="section-title">Photo Gallery</h2>
+      <p class="section-subtitle">See our rentals in action at real events!</p>
+
+      <!-- Gallery Filter -->
+      <div class="gallery-filters" id="galleryFilters">
+        <button class="gallery-filter-btn active" data-filter="all">All</button>
+        <button class="gallery-filter-btn" data-filter="bounce-houses">Bounce Houses</button>
+        <button class="gallery-filter-btn" data-filter="water-slides">Water Slides</button>
+        <button class="gallery-filter-btn" data-filter="combo-units">Combos</button>
+        <button class="gallery-filter-btn" data-filter="interactive-games">Games</button>
+        <button class="gallery-filter-btn" data-filter="events">Events</button>
+        <button class="gallery-filter-btn" data-filter="setup">Setup</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="loading-spinner" id="galleryLoading">
+          <div class="spinner"></div>
+          <p>Loading gallery...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#10094;</button>
+    <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next image">&#10095;</button>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightboxImg">
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+  </div>
+
+  <!-- Phases 4-5 content will go here -->
+
+  <script src="sanity-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
